@@ -40,9 +40,9 @@ export class UserController {
                     message: error.message
                 });
             } else if (error instanceof ValidationException) {
-                res.status(400).json({
+                return res.status(400).json({
                     error: "Validation failed",
-                    message: error.message
+                    messages: error.validationMessages || [error.message]
                 });
             } else {
                 res.status(500).json({
@@ -69,12 +69,12 @@ export class UserController {
             res.status(200).json({
                 message: "Login successful",
                 token: result.token,
-                user: {
+                /* user: {
                     id: result.user.id,
                     name: result.user.name,
                     email: result.user.email,
                     role: result.user.role
-                }
+                } */
             });
         } catch (error) {
             if (error instanceof InvalidCredentialsException) {
@@ -96,7 +96,7 @@ export class UserController {
             const users = await this.userService.getAllUsers();
             
             res.status(200).json({
-                users: users.map(user => ({
+                data: users.map(user => ({
                     id: user.id,
                     name: user.name,
                     email: user.email,
@@ -113,7 +113,7 @@ export class UserController {
 
     async getUserById(req: Request, res: Response) {
         try {
-            const userId = req.params.id;
+            const userId = parseInt(req.params.id ?? '');
             
             if (!userId) {
                 return res.status(400).json({
@@ -143,6 +143,32 @@ export class UserController {
             } else {
                 res.status(500).json({
                     error: "Failed to fetch user",
+                    message: "Something went wrong"
+                });
+            }
+        }
+    }
+
+    async deleteUser(req: Request, res: Response) {
+        try {
+            const userId = parseInt(req.params.id ?? '');
+            if (Number.isNaN(userId)) {
+                return res.status(400).json({
+                    error: "Invalid user ID",
+                    message: "User ID must be a number"
+                });
+            }
+            await this.userService.deleteUser(userId);
+            res.status(204).send();
+        } catch (error) {
+            if (error instanceof UserNotFoundException) {
+                res.status(404).json({
+                    error: "User not found",
+                    message: error.message
+                });
+            } else {
+                res.status(500).json({
+                    error: "Failed to delete user",
                     message: "Something went wrong"
                 });
             }

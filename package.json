@@ -3,8 +3,10 @@
   "module": "index.ts",
   "type": "module",
   "scripts": {
-    "lint": "eslint .",
-    "dev": "bun run --watch index.ts"
+    "start": "bun run index.js",
+    "build": "bun run tsc",
+    "dev": "bun --watch index.ts",
+    "lint": "bun run eslint ."
   },
   "private": true,
   "devDependencies": {

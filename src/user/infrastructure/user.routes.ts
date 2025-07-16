@@ -29,5 +29,10 @@ export function createUserRoutes(userController: UserController): Router {
         await userController.getUserById(req, res);
     }));
 
+    // DELETE /api/users/:id
+    router.delete('/:id', asyncHandler(async (req: any, res: any) => {
+        await userController.deleteUser(req, res);
+    }));
+
     return router;
 } 

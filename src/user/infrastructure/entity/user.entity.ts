@@ -3,8 +3,8 @@ import { Role } from "../../domain/Role.js";
 
 @Entity("users")
 export class UserEntity {
-    @PrimaryGeneratedColumn("uuid")
-    id!: string;
+    @PrimaryGeneratedColumn("increment")
+    id!: number;
 
     @Column({ type: "varchar", length: 100, nullable: false })
     name!: string;

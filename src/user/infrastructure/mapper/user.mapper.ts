@@ -6,17 +6,20 @@ export class UserMapper {
     
     static toDomain(entity: UserEntity): User {
         return new User(
-            entity.id,
             entity.name,
             entity.email,
             entity.password,
-            entity.role
+            entity.role,
+            entity.id
         );
     }
 
     static toEntity(domain: User): UserEntity {
         const entity = new UserEntity();
-        entity.id = domain.id;
+        // Si el id es undefined, no se setea en la entidad
+        if (domain.id !== undefined) {
+            entity.id = domain.id;
+        }
         entity.name = domain.name;
         entity.email = domain.email;
         entity.password = domain.password;
