@@ -69,12 +69,12 @@ export class UserController {
             res.status(200).json({
                 message: "Login successful",
                 token: result.token,
-                user: {
+                /* user: {
                     id: result.user.id,
                     name: result.user.name,
                     email: result.user.email,
                     role: result.user.role
-                }
+                } */
             });
         } catch (error) {
             if (error instanceof InvalidCredentialsException) {
@@ -96,7 +96,7 @@ export class UserController {
             const users = await this.userService.getAllUsers();
             
             res.status(200).json({
-                users: users.map(user => ({
+                data: users.map(user => ({
                     id: user.id,
                     name: user.name,
                     email: user.email,

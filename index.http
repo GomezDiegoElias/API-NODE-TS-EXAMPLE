@@ -22,7 +22,7 @@ POST http://localhost:3000/api/users/login
 Content-Type: application/json
 
 {
-  "email": "diegogomez@gmail.com",
+  "email": "juniorla22@gmail.com",
   "password": "123456"
 }
 
@@ -30,7 +30,7 @@ Content-Type: application/json
 GET http://localhost:3000/api/users
 
 ### Get User by ID
-GET http://localhost:3000/api/users/b8e4edab-b02e-4c82-b4fd-259326adda87
+GET http://localhost:3000/api/users/5
 
 ### Test with different user
 POST http://localhost:3000/api/users/register
