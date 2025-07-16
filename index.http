@@ -1,0 +1,44 @@
+### API Node.js TypeScript Example - HTTP Requests
+
+### Health Check
+GET http://localhost:3000/health
+
+### Root endpoint
+GET http://localhost:3000/
+
+### Register User
+POST http://localhost:3000/api/users/register
+Content-Type: application/json
+
+{
+  "name": "Diego",
+  "email": "diegogomez@gmail.com",
+  "password": "123456",
+  "role": "USER"
+}
+
+### Login User
+POST http://localhost:3000/api/users/login
+Content-Type: application/json
+
+{
+  "email": "diegogomez@gmail.com",
+  "password": "123456"
+}
+
+### Get All Users
+GET http://localhost:3000/api/users
+
+### Get User by ID
+GET http://localhost:3000/api/users/b8e4edab-b02e-4c82-b4fd-259326adda87
+
+### Test with different user
+POST http://localhost:3000/api/users/register
+Content-Type: application/json
+
+{
+  "name": "Valentina",
+  "email": "valentina@gmail.com",
+  "password": "123456",
+  "role": "ADMIN"
+}
