@@ -21,8 +21,10 @@ export class UserNotFoundException extends Error {
 }
 
 export class ValidationException extends Error {
-    constructor(message: string) {
+    public validationMessages?: string[];
+    constructor(message: string, validationMessages?: string[]) {
         super(message);
         this.name = 'ValidationException';
+        this.validationMessages = validationMessages;
     }
 } 

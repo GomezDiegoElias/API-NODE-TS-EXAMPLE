@@ -26,9 +26,13 @@ export class UserService {
         try {
             const user = await User.create(userRequest);
             return this.userRepository.save(user);
-        } catch (error) {
+        } catch (error: any) {
             if (error instanceof ValidationException) {
                 throw error;
+            }
+            // Si el error tiene validationMessages, pásalos al ValidationException
+            if (error && typeof error === 'object' && 'validationMessages' in error) {
+                throw new ValidationException("Invalid user data", (error as any).validationMessages);
             }
             throw new ValidationException("Invalid user data");
         }

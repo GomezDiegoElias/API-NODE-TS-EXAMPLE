@@ -40,9 +40,9 @@ export class UserController {
                     message: error.message
                 });
             } else if (error instanceof ValidationException) {
-                res.status(400).json({
+                return res.status(400).json({
                     error: "Validation failed",
-                    message: error.message
+                    messages: error.validationMessages || [error.message]
                 });
             } else {
                 res.status(500).json({

@@ -2,7 +2,8 @@ import type { UserRequest } from "../infrastructure/dto/user.request";
 import { Role } from "./Role";
 import bcrypt from "bcrypt";
 import { randomUUID } from "crypto";
-import { Validators } from "../../shared/utils/validators.js";
+import { UserRequestSchema } from "../infrastructure/dto/user.request.schema";
+import { parse } from "valibot";
 
 export class User {
 
@@ -23,11 +24,19 @@ export class User {
     // Factory method para creacion
 
     static async create(createUserDto: UserRequest): Promise<User> {
-        // validaciones usando la clase Validators
-        const validationErrors = Validators.validateUserData(createUserDto);
-        
-        if (validationErrors.length > 0) {
-            throw new Error(validationErrors.join(", "));
+        // Validación usando Valibot
+        try {
+            parse(UserRequestSchema, createUserDto);
+        } catch (error: any) {
+            if (error.issues) {
+                //throw new Error(error.issues.map((issue: any) => issue.message).join(", "));
+                const messages = error.issues.map((issue: any) => issue.message);
+                /* const err = new Error('Validation failed');
+                (err as any).validationMessages = messages;
+                throw err; */
+                throw { validationMessages: messages, message: "Validation failed" };
+            }
+            throw error;
         }
 
         const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
