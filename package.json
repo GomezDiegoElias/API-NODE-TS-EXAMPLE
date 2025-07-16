@@ -3,8 +3,10 @@
   "module": "index.ts",
   "type": "module",
   "scripts": {
-    "lint": "eslint .",
-    "dev": "bun run --watch index.ts"
+    "start": "bun run index.js",
+    "build": "bun run tsc",
+    "dev": "bun --watch index.ts",
+    "lint": "bun run eslint ."
   },
   "private": true,
   "devDependencies": {
@@ -28,9 +30,15 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@types/express": "^5.0.3",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
+    "dotenv": "^17.2.0",
+    "express": "5.1.0",
     "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.14.2",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.25",
     "valibot": "^1.1.0"
   }
 }
