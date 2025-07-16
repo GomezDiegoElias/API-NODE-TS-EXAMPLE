@@ -13,7 +13,7 @@ export class InvalidCredentialsException extends Error {
 }
 
 export class UserNotFoundException extends Error {
-    constructor(id?: string) {
+    constructor(id?: number) {
         const message = id ? `User with id ${id} not found` : 'User not found';
         super(message);
         this.name = 'UserNotFoundException';

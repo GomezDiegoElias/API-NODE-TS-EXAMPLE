@@ -65,7 +65,7 @@ export class UserService {
         return this.userRepository.findAll();
     }
 
-    async getUserById(id: string): Promise<User> {
+    async getUserById(id: number): Promise<User> {
         const user = await this.userRepository.findById(id);
         
         if (!user) {
@@ -73,5 +73,13 @@ export class UserService {
         }
         
         return user;
+    }
+
+    async deleteUser(id: number): Promise<void> {
+        const user = await this.userRepository.findById(id);
+        if (!user) {
+            throw new UserNotFoundException(id);
+        }
+        await this.userRepository.delete(id);
     }
 }

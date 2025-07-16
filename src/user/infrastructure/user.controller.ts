@@ -113,7 +113,7 @@ export class UserController {
 
     async getUserById(req: Request, res: Response) {
         try {
-            const userId = req.params.id;
+            const userId = parseInt(req.params.id ?? '');
             
             if (!userId) {
                 return res.status(400).json({
@@ -143,6 +143,32 @@ export class UserController {
             } else {
                 res.status(500).json({
                     error: "Failed to fetch user",
+                    message: "Something went wrong"
+                });
+            }
+        }
+    }
+
+    async deleteUser(req: Request, res: Response) {
+        try {
+            const userId = parseInt(req.params.id ?? '');
+            if (Number.isNaN(userId)) {
+                return res.status(400).json({
+                    error: "Invalid user ID",
+                    message: "User ID must be a number"
+                });
+            }
+            await this.userService.deleteUser(userId);
+            res.status(204).send();
+        } catch (error) {
+            if (error instanceof UserNotFoundException) {
+                res.status(404).json({
+                    error: "User not found",
+                    message: error.message
+                });
+            } else {
+                res.status(500).json({
+                    error: "Failed to delete user",
                     message: "Something went wrong"
                 });
             }

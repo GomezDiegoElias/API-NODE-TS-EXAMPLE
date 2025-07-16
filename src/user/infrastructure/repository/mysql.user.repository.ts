@@ -13,7 +13,7 @@ export class MysqlUserRepository implements UserRepository {
         return UserMapper.toDomainList(entities);
     }
 
-    async findById(id: string): Promise<User | null> {
+    async findById(id: number): Promise<User | null> {
         const entity = await this.userRepository.findOne({ where: { id } });
         return entity ? UserMapper.toDomain(entity) : null;
     }
@@ -34,7 +34,7 @@ export class MysqlUserRepository implements UserRepository {
         await this.userRepository.save(entity);
     }
 
-    async delete(id: string): Promise<void> {
+    async delete(id: number): Promise<void> {
         await this.userRepository.delete(id);
     }
 }
