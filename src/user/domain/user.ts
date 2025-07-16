@@ -7,18 +7,18 @@ import { parse } from "valibot";
 
 export class User {
 
-    public id: string;
+    public id?: number;
     public name: string;
     public email: string;
     public password: string;
     public role: Role;
 
-    constructor(id: string, name: string, email: string, password: string, role: Role) {
-        this.id = id;
+    constructor(name: string, email: string, password: string, role: Role, id?: number) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.id = id;
     }
 
     // Factory method para creacion
@@ -42,7 +42,6 @@ export class User {
         const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
         
         return new User(
-            randomUUID(),
             createUserDto.name,
             createUserDto.email,
             hashedPassword,
